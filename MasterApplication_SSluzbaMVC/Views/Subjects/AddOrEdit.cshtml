@@ -1,0 +1,44 @@
+﻿@using System.Web.UI.WebControls
+@model MasterApplication_SSluzbaMVC.Models.Subject
+
+@{
+    Layout = null;
+}
+
+@using (Html.BeginForm("AddOrEdit", "Subjects", FormMethod.Post, new { onsubmit = "return SubmitForm(this)" }))
+{
+    @Html.HiddenFor(model => model.SubjectID)
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    <div class="form-group">
+        @Html.LabelFor(model => model.SubjectName, new { @class = "control-label" })
+        @Html.EditorFor(model => model.SubjectName, new { htmlAttributes = new { @class = "form-control", placeholder = "Reinzenjering inf. sistema" } })
+        @Html.ValidationMessageFor(model => model.SubjectName)
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(model => model.SubjectCode, new { @class = "control-label" })
+        @Html.EditorFor(model => model.SubjectCode, new { htmlAttributes = new { @class = "form-control", placeholder = "eg. IIS" } })
+        @Html.ValidationMessageFor(model => model.SubjectCode)
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(model => model.Semestre, new { @class = "control-label" })
+        @Html.EditorFor(model => model.Semestre, new { htmlAttributes = new { @class = "form-control", placeholder = "eg. 6" } })
+        @Html.ValidationMessageFor(model => model.Semestre)
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(model => model.ESPB, new { @class = "control-label" })
+        @Html.DropDownListFor(model => model.ESPB, Enumerable.Range(4, 5).Select(i => new SelectListItem { Text = i.ToString(), Value = i.ToString() }), null, new { htmlAttributes = new { @class = "form-control" } })
+       @* @Html.EditorFor(model => model.ESPB, new { htmlAttributes = new { @class = "form-control", placeholder = "eg. 6" } })*@
+        @Html.ValidationMessageFor(model => model.ESPB)
+    </div>
+    <div class="form-group">
+        <input type="submit" value="Submit" class="btn btn-primary" />
+        <input type="reset" value="Reset" class="btn btn-warning" />
+    </div>
+
+}
+
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+
+}

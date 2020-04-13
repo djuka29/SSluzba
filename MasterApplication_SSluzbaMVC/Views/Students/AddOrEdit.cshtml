@@ -1,0 +1,73 @@
+﻿@using System.Web.UI.WebControls
+@model MasterApplication_SSluzbaMVC.Models.Student
+
+@{
+    Layout = null;
+}
+
+@using (Html.BeginForm("AddOrEdit", "Students", FormMethod.Post, new { onsubmit = "return SubmitForm(this)" }))
+{
+    @Html.HiddenFor(model => model.StudentID)
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    <div class="form-group">
+        @Html.LabelFor(model => model.StudentName, new { @class = "control-label" })
+        @Html.EditorFor(model => model.StudentName, new { htmlAttributes = new { @class = "form-control", placeholder = "eg. Jon Jones" } })
+        @Html.ValidationMessageFor(model => model.StudentName)
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(model => model.StudentDOB, new { @class = "control-label" })
+        <div class="input-group">
+            @Html.EditorFor(model => model.StudentDOB, new { htmlAttributes = new { @class = "form-control datetimepickernodate" } })
+            <span class="input-group-addon">
+                <span class="glyphicon glyphicon-calendar"></span>
+            </span>
+        </div>
+            
+        
+        @Html.ValidationMessageFor(model => model.StudentDOB)
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(model => model.YearOfStudies, new { @class = "control-label" })
+        @Html.DropDownListFor(model => model.YearOfStudies, Enumerable.Range(1, 5).Select(i => new SelectListItem { Text = i.ToString(), Value = i.ToString() }), null, new { htmlAttributes = new { @class = "form-control" } })
+        @Html.ValidationMessageFor(model => model.YearOfStudies)
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(model => model.IndexNumber, new { @class = "control-label" })
+        @Html.EditorFor(model => model.IndexNumber, new { htmlAttributes = new { @class = "form-control", placeholder = "eg. im45-2012" } })
+        @Html.ValidationMessageFor(model => model.IndexNumber)
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(model => model.Address, new { @class = "control-label" })
+        @Html.EditorFor(model => model.Address, new { htmlAttributes = new { @class = "form-control", placeholder = "eg. Bulevar oslobodjenja 1, Novi Sad" } })
+        @Html.ValidationMessageFor(model => model.Address)
+    </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.Email, new { @class = "control-label" })
+            @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control", placeholder = "eg. john.doe@gmail.com" } })
+            @Html.ValidationMessageFor(model => model.Email)
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.IsBudget, new { @class = "control-label" })
+            @Html.CheckBoxFor(model => model.IsBudget, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.IsBudget)
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.DepartmentID, "Department", htmlAttributes: new { @class = "control-label" })
+            @Html.DropDownList("DepartmentID", null, htmlAttributes: new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.DepartmentID)
+        </div>
+        <div>
+
+        </div>
+        <div class="form-group">
+            <input type="submit" value="Submit" class="btn btn-success" />
+            <input type="reset" value="Reset" class="btn btn-warning" />
+        </div>
+
+}
+
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+
+}

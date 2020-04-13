@@ -1,0 +1,48 @@
+﻿@using System.Web.UI.WebControls
+@model MasterApplication_SSluzbaMVC.Models.Professor
+
+@{
+    Layout = null;
+}
+
+@using (Html.BeginForm("AddOrEdit", "Professors", FormMethod.Post, new { onsubmit = "return SubmitForm(this)" }))
+{
+    @Html.HiddenFor(model => model.ProfessorID)
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    <div class="form-group">
+        @Html.LabelFor(model => model.ProfessorName, new { @class = "control-label" })
+        @Html.EditorFor(model => model.ProfessorName, new { htmlAttributes = new { @class = "form-control", placeholder = "eg. Jon Jones" } })
+        @Html.ValidationMessageFor(model => model.ProfessorName)
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(model => model.AcademicRank, new { @class = "control-label" })
+        @Html.EditorFor(model => model.AcademicRank, new { htmlAttributes = new { @class = "form-control", placeholder = "eg. Full professor" } })
+        @Html.ValidationMessageFor(model => model.AcademicRank)
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(model => model.Email, new { @class = "control-label" })
+        @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control", placeholder = "eg. milan.djukic@gmail.com" } })
+        @Html.ValidationMessageFor(model => model.Email)
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(model => model.Address, new { @class = "control-label" })
+        @Html.EditorFor(model => model.Address, new { htmlAttributes = new { @class = "form-control", placeholder = "eg. Bulevar oslobodjenja 1, Novi Sad" } })
+        @Html.ValidationMessageFor(model => model.Address)
+    </div>
+    <div>
+
+    </div>
+    <div class="form-group">
+        <input type="submit" value="Submit" class="btn btn-success" />
+        <input type="reset" value="Reset" class="btn btn-warning" />
+    </div>
+
+}
+
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+
+}
+
+

@@ -1,0 +1,125 @@
+﻿@model IEnumerable<MasterApplication_SSluzbaMVC.Models.Department>
+
+<a class="btn btn-success" style="margin-bottom:20px" onclick="PopupForm('@Url.Action("AddOrEdit", "Departments")')"><i class="fa fa-plus"></i> Add new department</a>
+
+<table id="departmentTable" class="table table-striped table-bordered" style="width: 100%">
+    <thead>
+        <tr>
+            <th>Department name</th>
+            <th>Department code</th>
+            <th> </th>
+        </tr>
+    </thead>
+</table>
+
+<link href="https://cdn.datatables.net/1.10.16/css/jquery.dataTables.min.css" rel="stylesheet" />
+<link href="https://cdn.datatables.net/1.10.16/css/dataTables.bootstrap.min.css" rel="stylesheet" />
+<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" />
+
+
+@*<link href="~/Content/themes/base/jquery-ui.min.css" rel="stylesheet" />*@
+
+
+
+@section scripts
+{
+    @* <script src="//cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>*@
+    <script scr="https://cdn.datatables.net/1.10.16/js/dataTables.bootstrap.min.js"></script>
+    <script src="~/Scripts/DataTables/jquery.dataTables.min.js"></script>
+
+    @*<script src="~/Scripts/jquery-ui-1.12.1.min.js"></script>*@
+    @*<script src="//cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>*@
+
+
+    <script>
+        function parseDate(value) {
+            if (value === null) return "";
+
+            var pattern = /Date\(([^)]+)\)/;
+            var results = pattern.exec(value);
+            var dt = new Date(parseFloat(results[1]));
+
+            return dt.getDate() + "/" + (dt.getMonth() + 1) + "/" + dt.getFullYear();
+        }
+    </script>
+
+
+
+    <script>
+    var Popup, dataTable;
+    $(document).ready(function() {
+        dataTable = $('#departmentTable').dataTable({
+            "ajax": {
+                "url": "/Departments/GetData",
+                "type": "get",
+                "datatype": "json"
+            },
+            "columns": [
+                { "data": "DepartmentName", "autoWidth": true, "autoHeight": true },
+                { "data": "DepartmentCode", "autoWidth": true, "autoHeight": true },
+                {
+                    "data": "DepartmentID",
+                    "render": function(data) {
+                        return "<a class='btn btn-primary btn-sm' onclick=PopupForm('@Url.Action("AddOrEdit", "Departments")/" +
+                            data +
+                            "')><i class='fa fa-pencil'></i> Edit</a><a class='btn btn-danger btn-sm' style='margin-left:5px' onclick=Delete(" + data +")><i class='fa fa-trash'></i> Delete</a>";
+                    },
+                    "orderable": false,
+                    "searchable": false,
+                        "width": "120px"
+                    }
+                ],
+                "language":
+                {
+                    "emptyTable":
+                        "No data found, please <b> add new department </b>"
+                }
+            });
+    });
+
+
+        function Delete(id) {
+
+            var dialog = bootbox.dialog({
+                title: 'Confirm',
+                message: "<p>Are you sure you want to delete this department?</p>",
+                buttons: {
+                    no: {
+                        label: "No",
+                        className: 'btn-default',
+                        callback: function() {
+                            bootbox.hideAll();
+                        }
+                    },
+                    yes: {
+                        label: "Yes",
+                        className: 'btn-danger',
+                        callback: function() {
+                            $.ajax({
+                                type: "POST",
+                                url: '@Url.Action("Delete","Departments")/' + id,
+                                success: function(data) {
+                                    if (data.success) {
+
+                                        dataTable.api().ajax.reload();
+
+                                        $.notify(data.message,
+                                            {
+                                                globalPosition: "top center",
+                                                className: "success"
+                                            });
+
+                                    }
+                                }
+                            });
+                        }
+                    }
+                }
+            });
+
+        }
+    </script>
+}
+
+
+

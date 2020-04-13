@@ -1,0 +1,113 @@
+﻿@using System.Web.UI.WebControls
+@model MasterApplication_SSluzbaMVC.Models.RegisterForAnExam
+
+@{
+    Layout = null;
+}
+
+@using (Html.BeginForm("AddOrEdit", "RegisterForAnExams", FormMethod.Post, new { onsubmit = "return SubmitForm(this)" }))
+{
+    @Html.HiddenFor(model => model.RegisterForAnExamID)
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    <div class="form-group">
+        @Html.LabelFor(model => model.ExamRoom, new { @class = "control-label" })
+        @Html.EditorFor(model => model.ExamRoom, new { htmlAttributes = new { @class = "form-control", placeholder = "eg. Jon Jones" } })
+        @Html.ValidationMessageFor(model => model.ExamRoom)
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(model => model.ExamDate, new { @class = "control-label" })
+        <div class="input-group">
+            @Html.EditorFor(model => model.ExamDate, new { htmlAttributes = new { @class = "form-control datetimepicker" } })
+            <span class="input-group-addon">
+                <span class="glyphicon glyphicon-calendar"></span>
+            </span>
+        </div>
+        @Html.ValidationMessageFor(model => model.ExamDate)
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(model => model.DepartmentID, "Department", htmlAttributes: new { @class = "control-label" })
+        @Html.DropDownListFor(b => b.DepartmentID, new SelectList(new List<string>(), "DepartmentID", "DepartmentName", 1 ), "Select department", new { @class = "form-control", id = "departmentDropdown" })
+        @Html.ValidationMessageFor(model => model.DepartmentID)
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(model => model.StudentID, "Student", htmlAttributes: new { @class = "control-label" })
+        @Html.DropDownListFor(r => r.StudentID, new SelectList(new List<string>(), "StudentID", "StudentName" ), new { @class = "form-control", id = "studentDropdown" })
+        @*//@Html.DropDownList("StudentID", null, htmlAttributes: new { @class = "form-control", id = "studentDropdown" }))*@
+        @Html.ValidationMessageFor(model => model.StudentID)
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(model => model.ProfessorID, "Professor", htmlAttributes: new { @class = "control-label" })
+        @Html.DropDownList("ProfessorID", null, htmlAttributes: new { @class = "form-control" })
+        @Html.ValidationMessageFor(model => model.ProfessorID)
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(model => model.SubjectID, "Subject", htmlAttributes: new { @class = "control-label" })
+        @Html.DropDownList("SubjectID", null, htmlAttributes: new { @class = "form-control" })
+        @Html.ValidationMessageFor(model => model.SubjectID)
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(model => model.ExamPeriodID, "ExamPeriod", htmlAttributes: new { @class = "control-label" })
+        @Html.DropDownList("ExamPeriodID", null, htmlAttributes: new { @class = "form-control" })
+        @Html.ValidationMessageFor(model => model.ExamPeriodID)
+    </div>
+
+
+
+    <div>
+
+    </div>
+    <div class="form-group">
+        <input type="submit" value="Submit" class="btn btn-success" />
+        <input type="reset" value="Reset" class="btn btn-warning" />
+    </div>
+
+}
+
+<script>
+    $(document).ready(function () {
+        var branchesDropDown = $("#departmentDropdown ");
+        var roomsDropDown = $("#studentDropdown");
+
+        branchesDropDown.ready(function () {
+
+            $.ajax({
+                url: "/RegisterForAnExams/GetDepartmens",
+                dataType: "json",
+                success: function (data) {
+                    $.each(data, function () {
+                        branchesDropDown.append("<option value='" + this.DepartmentID + "'>" + this.DepartmentName + "</option>")
+                    });
+                }
+            }).done(function () {
+                $.ajax({
+                    url: "/RegisterForAnExams/GetStudentsByDepartment?dpmId=" + @Model.DepartmentID,
+                    dataType: "json",
+                    success: function (data) {
+                        $.each(data, function () {
+                            roomsDropDown.append("<option value='" + this.StudentID + "'>" + this.StudentNameIndex + "</option>");
+                        });
+                    }
+                });
+            });
+
+            branchesDropDown.on("change", function () {
+                $.ajax({
+                    url: "/RegisterForAnExams/GetStudentsByDepartment?dpmId=" + branchesDropDown.val(),
+                    dataType: "json",
+                    success: function (data) {
+                        roomsDropDown.empty();
+                        $.each(data, function () {
+                            roomsDropDown.append("<option value='" + this.StudentID + "'>" + this.StudentNameIndex + "</option>");
+                        });
+                    }
+                });
+            });
+        })
+    })
+
+</script>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+
+}

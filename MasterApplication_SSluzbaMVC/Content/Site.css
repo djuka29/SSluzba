@@ -1,0 +1,174 @@
+﻿body {
+    padding-top: 50px;
+    padding-bottom: 20px;
+}
+
+/* Set padding to keep content from hitting the edges */
+.body-content {
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+/* Override the default bootstrap behavior where horizontal description lists 
+   will truncate terms that are too long to fit in the left column 
+*/
+.dl-horizontal dt {
+    white-space: normal;
+}
+
+/* Set width on the form input elements since they're 100% wide by default */
+input,
+select,
+textarea {
+    max-width: 280px;
+}
+
+.margin-top-20 {
+    margin-top: 20px;
+}
+
+.margin-right-10 {
+    margin-right: 10px;
+}
+
+.ui-dialog-titlebar-close {
+    background: url("http://code.jquery.com/ui/1.10.3/themes/smoothness/images/ui-icons_888888_256x240.png") repeat scroll -93px -128px rgba(0, 0, 0, 0);
+    border: medium none;
+}
+
+    .ui-dialog-titlebar-close:hover {
+        background: url("http://code.jquery.com/ui/1.10.3/themes/smoothness/images/ui-icons_222222_256x240.png") repeat scroll -93px -128px rgba(0, 0, 0, 0);
+    }
+
+table.dataTable {
+    clear: both;
+    margin-top: 6px !important;
+    margin-bottom: 6px !important;
+    max-width: none !important;
+    border-collapse: separate !important;
+    border-radius: 6px;
+    border-color: black;
+    border-style: solid;
+}
+
+div.dataTables_wrapper div.dataTables_filter input {
+    margin-left: 0.5em;
+    display: inline-block;
+    width: 200px;
+    border-radius: 5px;
+}
+
+div.dataTables_wrapper div.dataTables_length select {
+    width: 75px;
+    display: inline-block;
+    border-radius: 5px;
+}
+
+.ui-widget input, .ui-widget select, .ui-widget textarea, .ui-widget button {
+    font-family: Arial,Helvetica,sans-serif;
+    font-size: 1em;
+    border-radius: 5px;
+}
+
+img.ui-datepicker-trigger {
+    position: relative;
+    left: -18px;
+    top: 2px;
+}
+
+.navbar-inverse {
+    background-color: #337ab7;
+    border-color: none;
+}
+
+    .navbar-inverse .navbar-brand {
+        color: white;
+        /*background: url(Images/grb00.gif) no-repeat;*/
+        background-size: 40px 40px;
+        margin-left: -15px;
+    }
+
+    .navbar-inverse .navbar-nav > li > a {
+        color: white;
+    }
+
+.datepicker-addon-input {
+    flex: 1 1 auto;
+}
+
+span.field-validation-error {
+    color: red;
+    font-weight: bold;
+}
+
+.fa-check-circle:before {
+    content: "\f058";
+    color: green;
+    margin-left: 25px;
+    vertical-align: middle;
+    align-items: center;
+}
+
+.fa-times-circle:before {
+    content: "\f057";
+    color: red;
+    margin-left: 25px;
+    vertical-align: middle;
+}
+
+.wrapper {
+    display: flex;
+    width: 100%;
+    align-items: stretch;
+}
+
+#sidebar {
+    /* don't forget to add all the previously mentioned styles here too */
+    min-width: 250px;
+    max-width: 250px;
+    min-height: 100vh;
+    background: #337ab7;
+    color: white;
+    transition: all 0.3s;
+}
+
+    #sidebar .sidebar-header {
+        padding: 20px;
+        background: #6d7fcc;
+    }
+
+    #sidebar ul.components {
+        padding: 20px 0;
+        border-bottom: 1px solid #47748b;
+    }
+
+    #sidebar ul p {
+        color: white;
+        padding: 10px;
+    }
+
+    #sidebar ul li a {
+        padding: 10px;
+        font-size: 1.1em;
+        display: block;
+    }
+    #sidebar a{
+        color: white;
+    }
+        #sidebar ul li a:hover {
+            color: white;
+            background: #337ab7;
+        }
+
+    #sidebar ul li.active > a, a[aria-expanded="true"] {
+        color: white;
+        background: #6d7fcc;
+    }
+
+ul ul a {
+    color: white;
+    font-size: 0.9em !important;
+    padding-left: 30px !important;
+    background: #6d7fcc;
+}
+

@@ -1,0 +1,135 @@
+﻿@model IEnumerable<MasterApplication_SSluzbaMVC.Models.Student>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<a class="btn btn-success" style="margin-bottom:10px" onclick="PopupForm('@Url.Action("AddOrEdit", "Students")')"><i class="fa fa-plus"></i> Add new student</a>
+
+<table id="studentTable" class="table table-striped compact display table-hover table-bordered" style="width: 100%">
+    <thead>
+        <tr>
+            <th>Student name</th>
+            <th>Index number</th>
+            <th>Date of birth</th>
+            <th>Year of studies</th>
+            <th>Address</th>
+            <th>Email</th>
+            <th>Is Budget?</th>
+            <th>Department name</th>
+            <th> </th>
+        </tr>
+    </thead>
+</table>
+
+<link href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css" rel="stylesheet"/>
+<link href="https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap.min.css" rel="stylesheet"/>
+<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet"/>
+
+
+
+
+
+
+@section scripts
+{
+    
+    <script scr="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap.min.js"></script>
+    <script src="~/Scripts/DataTables/jquery.dataTables.min.js"></script>
+
+
+
+    <script>
+    var Popup, dataTable;
+    $(document).ready(function() {
+        dataTable = $('#studentTable').dataTable({
+            "ajax": {
+                "url": "/Students/GetData",
+                "type": "get",
+                "datatype": "json"
+            },
+            "columns": [
+                { "data": "StudentName", "width": "100px", "autoHeight": true },
+                { "data": "IndexNumber", "width": "100px", "autoHeight": true },
+                {
+                    "data": "StudentDOB",
+                    "render": function (data) { return moment(data).format("DD-MM-YYYY"); },
+                    "width": "60px"
+
+                },
+                { "data": "YearOfStudies", "autoWidth": true, "autoHeight": true },
+                { "data": "Address", "width": "150px", "autoHeight": true },
+                { "data": "Email", "autoWidth": true, "autoHeight": true },
+                {
+                    "data": "IsBudget",
+                    "render": function (data, type, row) {
+                        return (data === true) ? '<span class="fa fa-check-circle fa-lg"></span>' : '<span class="fa fa-times-circle fa-lg"></span>';
+                    },
+                    "autoWidth": "60px",
+                    "autoHeight": true
+                },
+                { "data": "Department.DepartmentName", "width": "150px", "autoHeight": true},
+                {
+                    "data": "StudentID",
+                    "render": function(data) {
+                        return "<a class='btn btn-primary btn-sm' onclick=PopupForm('@Url.Action("AddOrEdit", "Students")/" +
+                            data +
+                            "')><i class='fa fa-pencil'></i>Edit</a><a class='btn btn-danger btn-sm' style='margin-left:5px' onclick=Delete(" + data +")><i class='fa fa-trash'></i> Delete</a>";
+                    },
+                    "orderable": false,
+                    "searchable": false,
+                        "width": "135px"
+                    }
+                ],
+                "language":
+                {
+                    "emptyTable":
+                        "No data found, please <b> add new student </b>"
+                }
+            });
+    });
+
+
+        function Delete(id) {
+
+            var dialog = bootbox.dialog({
+                title: 'Confirm',
+                message: "<p>Are you sure you want to delete this student?</p>",
+                buttons: {
+                    no: {
+                        label: "No",
+                        className: 'btn-default',
+                        callback: function() {
+                            bootbox.hideAll();
+                        }
+                    },
+                    yes: {
+                        label: "Yes",
+                        className: 'btn-danger',
+                        callback: function() {
+                            $.ajax({
+                                type: "POST",
+                                url: '@Url.Action("Delete","Students")/' + id,
+                                success: function(data) {
+                                    if (data.success) {
+
+                                        dataTable.api().ajax.reload();
+
+                                        $.notify(data.message,
+                                            {
+                                                globalPosition: "top center",
+                                                className: "success"
+                                            });
+
+                                    }
+                                }
+                            });
+                        }
+                    }
+                }
+            });
+
+        }
+    </script>
+}
+

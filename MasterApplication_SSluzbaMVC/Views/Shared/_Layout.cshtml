@@ -1,0 +1,97 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title Studentska Sluzba</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+    <link href="~/Content/themes/base/jquery-ui.min.css" rel="stylesheet" />
+
+</head>
+<body>
+    <div class="navbar navbar-inverse navbar-fixed-top">
+
+        <div class="container" style="width: 100%">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a href="#" class="pull-left"><img src="~/Content/Images/grb00.gif" height="50" width="50" /></a>
+                @Html.ActionLink("Studentska Sluzba", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+
+            </div>
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav"></ul>
+                @Html.Partial("_LoginPartial")
+            </div>
+        </div>
+    </div>
+    <div class="wrapper">
+        <!-- Sidebar -->
+        @if (Request.Url.PathAndQuery.ToString().Equals("/Students")
+            || Request.Url.PathAndQuery.ToString().Equals("/Subjects")
+            || Request.Url.PathAndQuery.ToString().Equals("/Departments")
+            || Request.Url.PathAndQuery.ToString().Equals("/Professors")
+            || Request.Url.PathAndQuery.ToString().Equals("/RegisterForAnExams")
+            || Request.Url.PathAndQuery.ToString().Equals("/ExamPeriods"))
+        {
+        <nav id="sidebar">
+            <ul class="list-unstyled components margin-top-20">
+                <li>
+                    <a href="@Url.Action("Index","Students")" class="btn btn-primary btn-large btn-block">
+                        <span class="glyphicon glyphicon-education"></span> Students
+                    </a>
+                </li>
+                <li>
+                    <a href="@Url.Action("Index","Subjects")" class="btn btn-primary btn-large btn-block">
+                        <span class="glyphicon glyphicon-book"></span> Subjects
+                    </a>
+                </li>
+                <li>
+                    <a href="@Url.Action("Index","Departments")" class="btn btn-primary btn-large btn-block">
+                        <span class="glyphicon glyphicon-home"></span> Departments
+                    </a>
+                </li>
+                <li>
+                    <a href="@Url.Action("Index","Professors")" class="btn btn-primary btn-large btn-block">
+                        <span class="glyphicon glyphicon-user"></span> Professors
+                    </a>
+                </li>
+                <li>
+                    <a href="@Url.Action("Index","RegisterForAnExams")" class="btn btn-primary btn-large btn-block">
+                        <span class="glyphicon glyphicon-list-alt"></span> Register for an exam
+                    </a>
+                </li>
+                <li>
+                    <a href="@Url.Action("Index","ExamPeriods")" class="btn btn-primary btn-large btn-block">
+                        <span class="glyphicon glyphicon-calendar"></span> Exam periods
+                    </a>
+                </li>
+            </ul>
+        </nav>
+        }
+        <div class="container body-content">
+            <div class="row">
+                <div class="col-md-12 margin-top-20">
+                    <img src="~/Content/Images/student.jpg" class="img-responsive center-block" />
+                </div>
+            </div>
+            @RenderBody()
+            <hr />
+            <footer>
+                <p>&copy; @DateTime.Now.Year - Studentska sluzba</p>
+            </footer>
+        </div>
+    </div>
+
+
+
+
+    @Scripts.Render("~/bundles/lib")
+    @Scripts.Render("~/bundles/jqueryval")
+    @RenderSection("scripts", required: false)
+</body>
+</html>

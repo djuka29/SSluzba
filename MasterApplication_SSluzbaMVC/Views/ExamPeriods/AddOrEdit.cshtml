@@ -1,0 +1,53 @@
+﻿@using System.Web.UI.WebControls
+@model MasterApplication_SSluzbaMVC.Models.ExamPeriod
+
+@{
+    Layout = null;
+}
+
+@using (Html.BeginForm("AddOrEdit", "ExamPeriods", FormMethod.Post, new { onsubmit = "return SubmitForm(this)" }))
+{
+    @Html.HiddenFor(model => model.ExamPeriodID)
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    <div class="form-group">
+        @Html.LabelFor(model => model.ExamPeriodName, new { @class = "control-label" })
+        @Html.EditorFor(model => model.ExamPeriodName, new { htmlAttributes = new { @class = "form-control", placeholder = "eg. Jon Jones" } })
+        @Html.ValidationMessageFor(model => model.ExamPeriodName)
+    </div>
+    <div class="">
+        @Html.LabelFor(model => model.BegginngOfExamPeriod, new { @class = "control-label" })
+        <div class="input-group">
+           @Html.EditorFor(model => model.BegginngOfExamPeriod, new { htmlAttributes = new { @class = "form-control datetimepickernodate" } })
+            <span class="input-group-addon">
+                <span class="glyphicon glyphicon-calendar"></span>
+            </span>
+        </div>
+        @Html.ValidationMessageFor(model => model.BegginngOfExamPeriod)
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(model => model.EndingOfExamPeriod, new { @class = "control-label" })
+        <div class="input-group">
+            @Html.EditorFor(model => model.EndingOfExamPeriod, new { htmlAttributes = new { @class = "form-control datetimepickernodate" } })
+            <span class="input-group-addon">
+                <span class="glyphicon glyphicon-calendar"></span>
+            </span>
+        </div>
+        @Html.ValidationMessageFor(model => model.EndingOfExamPeriod)
+    </div>
+    <div>
+
+    </div>
+    <div class="form-group">
+        <input type="submit" value="Submit" class="btn btn-success" />
+        <input type="reset" value="Reset" class="btn btn-warning" />
+    </div>
+
+}
+
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+
+}
+
+

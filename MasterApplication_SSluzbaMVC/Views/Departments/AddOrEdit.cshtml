@@ -1,0 +1,36 @@
+﻿@using System.Web.UI.WebControls
+@model MasterApplication_SSluzbaMVC.Models.Department
+
+@{
+    Layout = null;
+}
+
+@using (Html.BeginForm("AddOrEdit", "Departments", FormMethod.Post, new { onsubmit = "return SubmitForm(this)" }))
+{
+    @Html.HiddenFor(model => model.DepartmentID)
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    <div class="form-group">
+        @Html.LabelFor(model => model.DepartmentName, new { @class = "control-label" })
+        @Html.EditorFor(model => model.DepartmentName, new { htmlAttributes = new { @class = "form-control", placeholder = "eg. Inzenjerstvo informacionih sistema" } })
+        @Html.ValidationMessageFor(model => model.DepartmentName)
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(model => model.DepartmentCode, new { @class = "control-label" })
+        @Html.EditorFor(model => model.DepartmentCode, new { htmlAttributes = new { @class = "form-control", placeholder = "eg. IM" } })
+        @Html.ValidationMessageFor(model => model.DepartmentCode)
+    </div>
+    <div>
+
+    </div>
+    <div class="form-group">
+        <input type="submit" value="Submit" class="btn btn-primary" />
+        <input type="reset" value="Reset" class="btn btn-warning" />
+    </div>
+
+}
+
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+
+}
